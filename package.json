@@ -35,7 +35,10 @@
         "url": "https://github.com/arikajs/router/issues"
     },
     "homepage": "https://github.com/arikajs/router#readme",
-    "dependencies": {},
+    "dependencies": {
+        "@arikajs/dispatcher": "file:../dispatcher",
+        "@arikajs/http": "file:../http"
+    },
     "devDependencies": {
         "@types/node": "^20.11.24",
         "typescript": "^5.3.3"

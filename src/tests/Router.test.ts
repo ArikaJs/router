@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { Route, Router, RouteRegistry } from '../index';
-import { Request } from '@arikajs/http';
+import { Request, Response } from '@arikajs/http';
 
 test('Router can register and match routes', async (t) => {
     RouteRegistry.getInstance().clear();
@@ -63,7 +63,9 @@ test('Router can extract route parameters', async (t) => {
         path: () => '/users/123'
     } as unknown as Request;
 
-    const result = await router.dispatch(mockRequest);
+    const mockResponse = {} as unknown as Response;
+
+    const result = await router.dispatch(mockRequest, mockResponse);
     assert.strictEqual(result, '123');
 });
 
@@ -109,7 +111,9 @@ test('Router can dispatch routes', async (t) => {
         path: () => '/hello'
     } as unknown as Request;
 
-    const result = await router.dispatch(mockRequest);
+    const mockResponse = {} as unknown as Response;
+
+    const result = await router.dispatch(mockRequest, mockResponse);
     assert.strictEqual(result, 'world');
 });
 
@@ -124,7 +128,9 @@ test('Router returns null if no match', async (t) => {
         path: () => '/not-found'
     } as unknown as Request;
 
-    const result = await router.dispatch(mockRequest);
+    const mockResponse = {} as unknown as Response;
+
+    const result = await router.dispatch(mockRequest, mockResponse);
     assert.strictEqual(result, null);
 });
 

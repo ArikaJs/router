@@ -1,6 +1,6 @@
-import { Request } from '@arikajs/http';
+import { Request, Response } from '@arikajs/http';
 import { RouteMatcher } from './RouteMatcher';
-import { Dispatcher } from './Dispatcher';
+import { Dispatcher } from '@arikajs/dispatcher';
 import { MatchedRoute, Container } from './types';
 
 export class Router {
@@ -18,6 +18,14 @@ export class Router {
      */
     public setContainer(container: Container): this {
         this.dispatcher.setContainer(container);
+        return this;
+    }
+
+    /**
+     * Register a route model binding.
+     */
+    public model(key: string, resolver: (value: any) => Promise<any>): this {
+        this.dispatcher.bind(key, resolver);
         return this;
     }
 
@@ -48,13 +56,13 @@ export class Router {
      * Dispatch the request to the matching route and return the result.
      * Note: This does not wrap the result in a Response object.
      */
-    public async dispatch(request: Request): Promise<any> {
+    public async dispatch(request: Request, response: Response): Promise<any> {
         const matched = this.match(request.method(), request.path());
 
         if (!matched) {
             return null;
         }
 
-        return await this.dispatcher.dispatch(matched, request);
+        return await this.dispatcher.dispatch(matched, request, response);
     }
 }
