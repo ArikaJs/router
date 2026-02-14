@@ -24,7 +24,7 @@ export class Router {
     /**
      * Register a route model binding.
      */
-    public model(key: string, resolver: (value: any) => Promise<any>): this {
+    public model(key: string, resolver: ((value: any) => Promise<any>) | { findOrFail: (id: any) => Promise<any> }): this {
         this.dispatcher.bind(key, resolver);
         return this;
     }
