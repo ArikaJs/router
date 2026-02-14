@@ -10,8 +10,8 @@
         "clean": "rm -rf dist",
         "prepare": "npm run build",
         "lint": "eslint src --ext .ts",
-        "test": "npm run build && node --test 'dist/tests/**/*.test.js'",
-        "test:watch": "npm run build && node --test --watch 'dist/tests/**/*.test.js'"
+        "test": "npx tsx --test tests/**/*.test.ts",
+        "test:watch": "npx tsx --test --watch tests/**/*.test.ts"
     },
     "files": [
         "dist"
