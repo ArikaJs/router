@@ -1,8 +1,7 @@
-import { Container } from '@arikajs/foundation';
 import { Request } from '@arikajs/http';
 import { RouteMatcher } from './RouteMatcher';
 import { Dispatcher } from './Dispatcher';
-import { MatchedRoute } from './types';
+import { MatchedRoute, Container } from './types';
 
 export class Router {
     private matcher: RouteMatcher;

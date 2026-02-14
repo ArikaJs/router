@@ -1,8 +1,4 @@
-import { Request, Response } from '@arikajs/http';
-
-export type RouteHandler =
-    | ((request: Request, ...params: any[]) => Promise<Response | any> | Response | any)
-    | [any, string];
+export type RouteHandler = any;
 
 export interface RouteDefinition {
     method: string;
@@ -10,7 +6,7 @@ export interface RouteDefinition {
     handler: RouteHandler;
     name?: string;
     prefix?: string;
-    middleware: any[]; // Using any for now to avoid circular dependency with Http/Middleware
+    middleware: any[];
     regex?: RegExp;
     paramKeys?: string[];
 }
@@ -18,4 +14,8 @@ export interface RouteDefinition {
 export interface MatchedRoute {
     route: RouteDefinition;
     params: Record<string, string>;
+}
+
+export interface Container {
+    make<T>(token: any): T;
 }

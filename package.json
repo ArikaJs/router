@@ -35,10 +35,7 @@
         "url": "https://github.com/arikajs/router/issues"
     },
     "homepage": "https://github.com/arikajs/router#readme",
-    "dependencies": {
-        "@arikajs/foundation": "file:../foundation",
-        "@arikajs/http": "file:../http"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@types/node": "^20.11.24",
         "typescript": "^5.3.3"

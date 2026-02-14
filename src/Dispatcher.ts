@@ -1,6 +1,5 @@
-import { Container } from '@arikajs/foundation';
 import { Request } from '@arikajs/http';
-import { MatchedRoute } from './types';
+import { MatchedRoute, Container } from './types';
 
 export class Dispatcher {
     constructor(private container?: Container) { }
