@@ -4,7 +4,7 @@
 
 It is responsible for mapping HTTP requests to route handlers in a predictable, framework-controlled way, without depending on Express, Fastify, or any external routing library.
 
-Arika Router integrates directly with **@arikajs/http** and **@arikajs/foundation** to provide a Laravel-inspired routing experience.
+Arika Router integrates directly with **@arikajs/http** and **@arikajs/foundation** to provide an elegant, intuitive routing experience.
 
 ---
 
