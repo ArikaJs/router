@@ -48,8 +48,8 @@ export class RouteEntry implements RouteDefinition {
     private compilePath(path: string) {
         const paramKeys: string[] = [];
         const pattern = path
-            .replace(/:([^/]+)/g, (_, key) => {
-                paramKeys.push(key);
+            .replace(/:([a-zA-Z0-9_]+)|\{([a-zA-Z0-9_]+)\}/g, (_, key1, key2) => {
+                paramKeys.push(key1 || key2);
                 return '([^/]+)';
             })
             .replace(/\//g, '\\/');

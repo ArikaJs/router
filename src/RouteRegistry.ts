@@ -6,6 +6,7 @@ export class RouteRegistry {
     private routes: RouteEntry[] = [];
     private groupStack: string[] = [];
     private middlewareStack: any[][] = [];
+    private models: Map<string, any> = new Map();
 
     private constructor() { }
 
@@ -14,6 +15,14 @@ export class RouteRegistry {
             RouteRegistry.instance = new RouteRegistry();
         }
         return RouteRegistry.instance;
+    }
+
+    public model(key: string, resolver: any): void {
+        this.models.set(key, resolver);
+    }
+
+    public getModels(): Map<string, any> {
+        return this.models;
     }
 
     public addRoute(method: string, path: string, handler: RouteHandler): RouteEntry {

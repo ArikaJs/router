@@ -26,4 +26,8 @@ export class Route {
     public static group(options: string | { prefix?: string; middleware?: any | any[] }, callback: () => void): void {
         RouteRegistry.getInstance().group(options, callback);
     }
+
+    public static model(key: string, resolver: any): void {
+        RouteRegistry.getInstance().model(key, resolver);
+    }
 }

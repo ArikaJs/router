@@ -2,6 +2,7 @@ import { Request, Response } from '@arikajs/http';
 import { RouteMatcher } from './RouteMatcher';
 import { Dispatcher } from '@arikajs/dispatcher';
 import { MatchedRoute, Container } from './types';
+import { RouteRegistry } from './RouteRegistry';
 
 export class Router {
     private matcher: RouteMatcher;
@@ -14,10 +15,36 @@ export class Router {
     }
 
     /**
+     * Sync models from the static registry.
+     */
+    private syncModels(): void {
+        const models = RouteRegistry.getInstance().getModels();
+        for (const [key, resolver] of models.entries()) {
+            this.dispatcher.bind(key, resolver);
+        }
+    }
+
+    /**
      * Set the container for the dispatcher.
      */
     public setContainer(container: Container): this {
         this.dispatcher.setContainer(container);
+        return this;
+    }
+
+    /**
+     * Set the middleware groups.
+     */
+    public setMiddlewareGroups(groups: Record<string, any[]>): this {
+        this.dispatcher.setMiddlewareGroups(groups);
+        return this;
+    }
+
+    /**
+     * Set the route middleware aliases.
+     */
+    public setRouteMiddleware(middleware: Record<string, any>): this {
+        this.dispatcher.setRouteMiddleware(middleware);
         return this;
     }
 
@@ -57,6 +84,7 @@ export class Router {
      * Note: This does not wrap the result in a Response object.
      */
     public async dispatch(request: Request, response: Response): Promise<any> {
+        this.syncModels();
         const matched = this.match(request.method(), request.path());
 
         if (!matched) {
