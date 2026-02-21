@@ -1,6 +1,6 @@
 {
     "name": "@arikajs/router",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "description": "Routing and request-dispatching layer of the ArikaJS framework.",
     "license": "MIT",
     "main": "dist/index.js",
@@ -36,8 +36,8 @@
     },
     "homepage": "https://github.com/arikajs/router#readme",
     "dependencies": {
-        "@arikajs/http": "file:../http",
-        "@arikajs/dispatcher": "file:../dispatcher"
+        "@arikajs/http": "^0.0.4",
+        "@arikajs/dispatcher": "^0.0.4"
     },
     "devDependencies": {
         "@types/node": "^20.11.24",
