@@ -64,6 +64,10 @@ export class RouteRegistry {
         return this.routes;
     }
 
+    public getRouteByName(name: string): RouteEntry | undefined {
+        return this.routes.find(r => r.name === name);
+    }
+
     public clear(): void {
         this.routes = [];
         this.groupStack = [];

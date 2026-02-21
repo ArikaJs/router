@@ -36,8 +36,8 @@
     },
     "homepage": "https://github.com/arikajs/router#readme",
     "dependencies": {
-        "@arikajs/http": "^0.0.4",
-        "@arikajs/dispatcher": "^0.0.4"
+        "@arikajs/http": "file:../http",
+        "@arikajs/dispatcher": "file:../dispatcher"
     },
     "devDependencies": {
         "@types/node": "^20.11.24",

@@ -73,6 +73,27 @@ export class Router {
     }
 
     /**
+     * Generate a URL for a named route.
+     */
+    public route(name: string, params: Record<string, string | number> = {}): string {
+        const route = RouteRegistry.getInstance().getRouteByName(name);
+
+        if (!route) {
+            throw new Error(`Route [${name}] not found.`);
+        }
+
+        let path = route.path;
+
+        for (const [key, value] of Object.entries(params)) {
+            path = path.replace(`:${key}`, String(value)).replace(`{${key}}`, String(value));
+        }
+
+        // Return without checking for lingering parameters (that could be optional in regex)
+        // just a basic replacement implementation.
+        return path;
+    }
+
+    /**
      * Clear the route cache.
      */
     public clearCache(): void {

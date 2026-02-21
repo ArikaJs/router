@@ -12,12 +12,14 @@ Arika Router integrates directly with **@arikajs/http** and **@arikajs/foundatio
 
 - **Stage**: Early Development / v0.x
 - **Scope (v1.x)**:
-  - HTTP method based routing (GET, POST, PUT, PATCH, DELETE)
+  - HTTP method based routing (GET, POST, PUT, PATCH, DELETE, ANY)
   - Path-based route matching (Static & Regex)
-  - Route parameters (`/users/:id`)
+  - Route parameters with Regex constraints (`/users/:id`)
+  - Resourceful routing (`Route.resource`)
+  - Redirect routes (`Route.redirect`)
   - Central route registry
-  - Route grouping with prefixes & middleware
-  - Route naming
+  - Route grouping with prefixes & middleware (fluent chaining)
+  - Route naming and URL generation (Reverse Routing)
   - Controller resolution from container
   - Route handler execution (dispatching)
 - **Out of scope (for now)**:
@@ -29,18 +31,23 @@ Arika Router integrates directly with **@arikajs/http** and **@arikajs/foundatio
 ## Features
 
 - **Core Routing**
-  - HTTP method based routing (GET, POST, PUT, PATCH, DELETE)
+  - HTTP method based routing (GET, POST, PUT, PATCH, DELETE, ANY)
+  - Redirect routes directly from the router
+  - Resourceful routing capabilities
   - Path-based route matching
-  - Central route registry
 
-- **Route Grouping**
+- **Route Grouping & Chaining**
   - Group routes with a common prefix
   - Nested groups support
+  - Fluent configuration (`Route.prefix('api').middleware('auth').group(...)`)
 
-- **Request Matching**
+- **Advanced Matching**
+  - Parameter regular expression constraints (`where()`)
   - Method + path matching
-  - First match wins logic
-  - Predictable matching order
+  - Match specific parameter subsets cleanly
+
+- **Reverse Routing**
+  - Name your routes and generate fully qualified URLs dynamically
 
 - **Dispatching**
   - Route handler execution
@@ -79,17 +86,32 @@ Route.post('/submit', (request) => {
 });
 ```
 
-### 2. Route Parameters & Fluent Chaining
+### 2. Route Parameters & Constraints
 
 ```ts
 Route.get('/users/:id', (request, id) => {
   return `User ID: ${id}`;
 })
+.where('id', '[0-9]+') // Enforces that ID must be digits!
 .as('users.show')
 .withMiddleware(AuthMiddleware);
 ```
 
-### 3. Controller Resolution
+### 3. Advanced Route Types
+
+```ts
+// Respond to multiple methods
+Route.any('/webhook', (req) => { ... });
+
+// Instant 301/302 Redirection
+Route.redirect('/old-path', '/new-path', 301);
+
+// Automatic Resourceful Routes (index, create, store, show, edit, update, destroy)
+import { PostController } from './controllers/PostController';
+Route.resource('posts', PostController);
+```
+
+### 4. Controller Resolution
 
 ```ts
 import { UserController } from './controllers/UserController';
@@ -97,14 +119,25 @@ import { UserController } from './controllers/UserController';
 Route.get('/users', [UserController, 'index']);
 ```
 
-### 4. Route Grouping
+### 5. Route Grouping (Fluent)
 
 ```ts
-Route.group('/api', () => {
-  Route.get('/users', () => {
-    return ['user1', 'user2'];
+Route.prefix('api/v1')
+  .middleware(['auth', 'throttle'])
+  .group(() => {
+    Route.get('/profile', [ProfileController, 'show']);
   });
-});
+```
+
+### 6. Reverse Routing (URL Generation)
+
+You can generate dynamic URLs based purely on a named route.
+
+```ts
+Route.get('/posts/:id/comments/:commentId', () => { ... }).as('post.comment');
+
+const url = router.route('post.comment', { id: 5, commentId: 10 });
+// Returns: "/posts/5/comments/10"
 ```
 
 ---

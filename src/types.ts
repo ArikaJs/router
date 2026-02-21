@@ -9,6 +9,7 @@ export interface RouteDefinition {
     middleware: any[];
     regex?: RegExp;
     paramKeys?: string[];
+    constraints?: Record<string, string>;
 }
 
 export interface MatchedRoute {
