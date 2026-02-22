@@ -142,22 +142,24 @@ const url = router.route('post.comment', { id: 5, commentId: 10 });
 
 ---
 
-## Architecture Overview
-
-The router follows a simple flow:
+## 🏗 Architecture
 
 ```text
-HTTP Request
-↓
-HttpKernel (@arikajs/http)
-↓
-RouteMatcher
-↓
-Matched Route
-↓
-Dispatcher
-↓
-Handler Execution
+router/
+├── src/
+│   ├── tests
+│   │   └── Router.test.ts
+│   ├── index.ts
+│   ├── Route.ts
+│   ├── RouteEntry.ts
+│   ├── RouteMatcher.ts
+│   ├── Router.ts
+│   ├── RouteRegistry.ts
+│   └── types.ts
+├── tests/
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
 The router never writes to the response directly. It only decides **which handler should run**.
@@ -220,24 +222,3 @@ Contributions are welcome! Please ensure you:
 ## License
 
 `@arikajs/router` is open-sourced software licensed under the **MIT license**.
-
-## 🏗 Architecture
-
-```text
-router/
-├── src/
-│   ├── tests
-│   │   └── Router.test.ts
-│   ├── index.ts
-│   ├── Route.ts
-│   ├── RouteEntry.ts
-│   ├── RouteMatcher.ts
-│   ├── Router.ts
-│   ├── RouteRegistry.ts
-│   └── types.ts
-├── tests/
-├── package.json
-├── tsconfig.json
-└── README.md
-```
-
