@@ -220,3 +220,24 @@ Contributions are welcome! Please ensure you:
 ## License
 
 `@arikajs/router` is open-sourced software licensed under the **MIT license**.
+
+## 🏗 Architecture
+
+```text
+router/
+├── src/
+│   ├── tests
+│   │   └── Router.test.ts
+│   ├── index.ts
+│   ├── Route.ts
+│   ├── RouteEntry.ts
+│   ├── RouteMatcher.ts
+│   ├── Router.ts
+│   ├── RouteRegistry.ts
+│   └── types.ts
+├── tests/
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
