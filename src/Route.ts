@@ -46,6 +46,14 @@ export class Route {
         return methods.map(method => RouteRegistry.getInstance().addRoute(method, path, handler));
     }
 
+    public static options(path: string, handler: RouteHandler): RouteEntry {
+        return RouteRegistry.getInstance().addRoute('OPTIONS', path, handler);
+    }
+
+    public static match(methods: string[], path: string, handler: RouteHandler): RouteEntry[] {
+        return methods.map(method => RouteRegistry.getInstance().addRoute(method.toUpperCase(), path, handler));
+    }
+
     public static redirect(path: string, destination: string, status = 302): RouteEntry {
         return RouteRegistry.getInstance().addRoute('ANY', path, (request: any, response: any) => {
             if (response && typeof response.redirect === 'function') {
